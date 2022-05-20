@@ -16,4 +16,10 @@ app.listen(3000, () => {
 
 app.get('/', (request, response) => {
 	response.sendFile(path.resolve(__dirname, 'index.html'))
-})t
+})
+
+app.get('/list', (request, response) => {
+  response.json({
+		text: fs.readdirSync(path.resolve(__dirname, 'textos/'))
+ 	})
+})
