@@ -21,15 +21,14 @@ app.get('/', (request, response) => {
 })
 
 app.get('/list', (request, response) => {
-  response.json({
+	response.json({
 		text: fs.readdirSync(path.resolve(__dirname, 'textos/'))
- 	})
+	})
 })
 
 app.post('/view', (request, response) => {
     let namePage = request.body.text
-	console.log(namePage)
-    let dir = 'textos/' + namePage;
+	let dir = 'textos/' + namePage;
     fs.readFile(path.resolve(__dirname, dir), 'utf8',
 		(err, data) => {
 			if (err) {
@@ -44,10 +43,7 @@ app.post('/view', (request, response) => {
 			})
 		})
 	response.setHeader('Content-Type', 'application/json')
-
-}
-
-)
+})
 
 app.post('/create', (request, response) => {
 	let markDownText = request.body
@@ -64,3 +60,4 @@ app.post('/create', (request, response) => {
         title: markDownText.title
 	}))
 })
+

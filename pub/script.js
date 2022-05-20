@@ -7,8 +7,8 @@ function listar() {
       data => {
         let html = '    <h1>Lista de páginas</h1>\n<ul>';
         for(let i=0; i<data.text.length;i++){
-	    var name = data.text[i];
-	    html += '<li onclick=viewPages("'+name+'")>' + name + '</li>'
+            var name = data.text[i];
+          html += '<li onclick=viewPages("'+name+'")>' + name + '</li>'
         }
         html += '</ul>\n<button onclick=formPage()>Crear</button>'
         document.querySelector("#main").innerHTML = html
@@ -21,9 +21,9 @@ function viewPages(name) {
 	const data = {
 		text: name
 	}
-
+	
 	const request = {
-		method: 'POST', // Podría ser GET
+		method: 'POST', 
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -34,10 +34,10 @@ function viewPages(name) {
 	).then(
 		data => {  
 			document.querySelector("#main").innerHTML = data.text
+			document.querySelector("#main").innerHTML += '\n<button onclick=listar()>Retroceder</button>'
 		}
 	)
 }
-
 
 function formPage(){
 	html =  `
@@ -47,12 +47,12 @@ function formPage(){
 				<textarea id="markupText" rows="10" cols="50" placeholder='Ingrese el texto'></textarea>
 				<input type="submit" id='enviar'>
   			</form>
-			  <button onclick='listar()'>Lista</button>  
+			<button onclick='listar()'>Regresar</button>  
+
 	`
 	document.querySelector("#main").innerHTML = html
 	noNullForm()
-	createMarkdown()
-	
+    createMarkdown()
 }
 
 function noNullForm(){
@@ -75,15 +75,17 @@ function noNullForm(){
 		}
 	};
 }
+
 function createMarkdown(){
 	const text = document.querySelector('#markupText')
     const title = document.querySelector('#markupTitle')
 
     document.querySelector('#markupForm').onsubmit = () => {
-		createPage(title.value,text.value)
+		crearPage(title.value,text.value)
 	  	return false;
 	}
 }
+
 function crearPage(titlePage, textPage) {
     const url = 'http://localhost:3000/create'
 	const data = {
@@ -91,7 +93,7 @@ function crearPage(titlePage, textPage) {
         text: textPage
 	}
 	const request = {
-		method: 'POST', // Podría ser GET
+		method: 'POST', 
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -106,5 +108,5 @@ function crearPage(titlePage, textPage) {
 	)
     listar()
 }
-document.addEventListener('DOMContentLoaded', function() {listar()})
 
+document.addEventListener('DOMContentLoaded', function() {listar()})
